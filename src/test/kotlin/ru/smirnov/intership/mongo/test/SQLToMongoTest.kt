@@ -118,4 +118,20 @@ class SQLToMongoTest {
         assertEquals(
             "db.customers.find({age: {\$gt: 22}, name: {\$eq: \"Vasya\"}, surname: {\$ne: \"Petrov\"}, height: {\$lt: 190}})", result)
     }
+
+    @Test
+    fun shouldAcceptFloatingNumbersInPredicate() {
+        val result = SQLToMongo().convert("SELECT * FROM customers WHERE age > 22.5 AND name = 'Vasya'")
+        assertEquals("db.customers.find({age: {\$gt: 22.5}, name: {\$eq: \"Vasya\"}})", result)
+    }
+
+    @Test(expected = ParserException::class)
+    fun shouldNotAcceptFloatingNumbersInLimit() {
+        SQLToMongo().convert("SELECT * FROM customers WHERE age > 22.5 AND name = 'Vasya' LIMIT 2.5")
+    }
+
+    @Test(expected = ParserException::class)
+    fun shouldNotAcceptFloatingNumbersInOffset() {
+        SQLToMongo().convert("SELECT * FROM customers WHERE age > 22.5 AND name = 'Vasya' OFFSET 2.5")
+    }
 }

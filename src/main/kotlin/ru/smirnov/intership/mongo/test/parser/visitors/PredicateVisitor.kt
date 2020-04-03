@@ -33,5 +33,9 @@ class PredicateVisitor : MongoSQLGrammarBaseVisitor<Predicate>() {
         val operand = ctx.operand().accept(OperandVisitor())
         return Predicate(ctx.column.text, operand, operator)
     }
+
+    override fun visitBracesPredicate(ctx: MongoSQLGrammarParser.BracesPredicateContext): Predicate {
+        return ctx.predicate().accept(this)
+    }
 }
 

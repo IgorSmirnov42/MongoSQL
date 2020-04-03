@@ -39,8 +39,8 @@ limit
     ;
 
 predicate
-    : noBracesPredicate
-    | '(' predicate ')'
+    : noBracesPredicate #noBraces
+    | '(' predicate ')' #bracesPredicate
     ;
 
 noBracesPredicate
