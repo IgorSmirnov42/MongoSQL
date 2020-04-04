@@ -1,6 +1,14 @@
 package ru.smirnov.intership.mongo.test.queries
 
+/**
+ * Operators in query.
+ */
 sealed class Operator {
+    /**
+     * Returns Mongo alias for this operator.
+     *
+     * For example, for Equality it is "$eq"
+     */
     abstract fun toMongo(): String
 }
 
